@@ -8,32 +8,39 @@ public class IceCreamSalon implements IceCreamSeller{
     private double totalProfit;
 
     //Constructor
-    public IceCreamSalon(PriceList priceList, double totalProfit) {
-        this.priceList = priceList;
-        totalProfit = 0;
+
+    public IceCreamSalon(PriceList priceList){
+        this.priceList=priceList;
     }
 
+
+    //Method
     @Override
     public Cone orderCone(Flavor[] balls) {
+        Cone cone = new Cone(balls);
+
         totalProfit += priceList.getBallPrice()*0.25* balls.length;
-        return new Cone(balls);
+        return cone;
     }
 
     @Override
     public IceRocket orderIceRocket() {
-        totalProfit += priceList.getRocketPrice()*0.02;
-        return new IceRocket();
+        IceRocket iceRocket = new IceRocket();
+        totalProfit += priceList.getRocketPrice()*0.20;
+        return iceRocket;
     }
 
     @Override
     public Magnum orderMagnum(MagnumType type) {
+        Magnum magnum = new Magnum(type);
         totalProfit += priceList.getMagnumPrice(type) * 0.01;
-        return new Magnum();
+        return magnum;
     }
 
     @Override
     public double getProfit() {
-        return 0;
+
+        return totalProfit;
     }
 
     @Override

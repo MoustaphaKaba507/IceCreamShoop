@@ -12,8 +12,4 @@ public enum Flavor {
     ;
 
 
-    //Constructor
-
-    Flavor() {
-    }
 }

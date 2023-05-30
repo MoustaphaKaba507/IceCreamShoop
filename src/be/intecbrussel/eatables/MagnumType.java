@@ -7,7 +7,5 @@ public enum MagnumType {
     ALPINENUTS,
     ROMANTICSTRAWBERRIES;
 
-    //Constructor
-    MagnumType() {
-    }
+
 }

@@ -1,20 +1,25 @@
 package be.intecbrussel.application;
 
-import be.intecbrussel.eatables.Flavor;
-import be.intecbrussel.eatables.MagnumType;
-import be.intecbrussel.eatables.PriceList;
+import be.intecbrussel.eatables.*;
 import be.intecbrussel.sellers.IceCreamSalon;
+import be.intecbrussel.sellers.PriceList;
 
 public class IceCreamApp {
     public static void main(String[] args) {
-        PriceList priceList=new PriceList(0.25,0.20,0.01);
+        PriceList priceList=new PriceList(10,20,100);
+        IceCreamSalon iceCreamSalon = new IceCreamSalon(priceList);
 
-        IceCreamSalon iceCreamSalon = new IceCreamSalon(priceList,0.46);
-        iceCreamSalon.orderIceRocket();
-        iceCreamSalon.orderCone(new Flavor[]{Flavor.BANANA,Flavor.LEMON});
-        iceCreamSalon.orderMagnum(MagnumType.MILKCHOCOLATE);
+        Cone cone =iceCreamSalon.orderCone(new Flavor[]{Flavor.BANANA,Flavor.LEMON});
+        IceRocket iceRocket = iceCreamSalon.orderIceRocket();
+        Magnum magnum =iceCreamSalon.orderMagnum(MagnumType.BLACKCHOCOLATE);
 
-        System.out.println(iceCreamSalon.getProfit());
+        Eatable[] icecreams = new Eatable[]{cone,iceRocket,magnum};
+
+        for(Eatable icecream : icecreams){
+            icecream.eat();
+        }
+
+        System.out.println("PROFIT: "+ iceCreamSalon.getProfit());
 
 
 

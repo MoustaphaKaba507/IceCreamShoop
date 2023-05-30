@@ -11,76 +11,85 @@ public class IceCreamCar implements IceCreamSeller {
     public IceCreamCar(PriceList priceList, Stock stock) {
         this.priceList = priceList;
         this.stock = stock;
-        profit = 0;
+
     }
 
     //Method
     public Cone orderCone(Flavor[] balls){
         Cone cone = prepareCone(balls);
-        if(cone == null) return null;
-        profit += priceList.getBallPrice()*0.25* balls.length;
-        return cone;
 
+        if(cone != null) {
+            profit += priceList.getBallPrice() * balls.length * 0.12;
+
+        }
+        return cone;
 
     }
 
-    public Cone prepareCone(Flavor[] balls){
-        int conesLeft = stock.getCones();
-        int ballsLeft = stock.getBalls();
-        if(conesLeft < balls.length || ballsLeft < 0){
-            System.out.println("no more cone");
+    private Cone prepareCone(Flavor[] balls){
 
+        if(stock.getCones() > 0 && stock.getBalls() >= balls.length){
+       Cone cone = new Cone(balls);
+       stock.setCones(stock.getCones()- 1);
+       stock.setBalls(stock.getBalls()- 1);
+         return cone;
         }
-        stock.setCones(-balls.length);
-        stock.setBalls(0);
-        return new Cone();
+
+        System.out.println("NO MORE ICECREAM");
+        return null;
     }
 
     public IceRocket orderIceRocket(){
         IceRocket iceRocket = prepareRocket();
-        if(iceRocket != null) {
 
-      profit += priceList.getRocketPrice()*0.20;
-        };
+        if(iceRocket != null) {
+            profit += priceList.getRocketPrice()*0.20;
+        }
 
       return iceRocket;
 
     }
 
-    public IceRocket prepareRocket(){
-        int productLeft = stock.getIceRockets();
-        if(productLeft <= 0){
-            System.out.println("out of ice cream");
-            return null;
+    private IceRocket prepareRocket(){
+
+        if(stock.getIceRockets() > 0){
+            IceRocket iceRocket = new IceRocket();
+            stock.setIceRockets(stock.getIceRockets()- 1);
+            return iceRocket;
         }
-        stock.setIceRockets(productLeft-1);
-            return new IceRocket();
 
-
+        System.out.println("NO MORE ICECREAM");
+        return null;
     }
+
+
+
     @Override
     public Magnum orderMagnum(MagnumType type) {
-        Magnum magnum = prepareMagnum(MagnumType.MILKCHOCOLATE);
-        if(magnum == null){
-            profit += priceList.getMagnumPrice(MagnumType.MILKCHOCOLATE)*0.01;
+        Magnum magnum = prepareMagnum(type);
+
+        if(magnum != null){
+            profit += priceList.getMagnumPrice(type)*0.01;
 
         }
-        return new Magnum();
+        return magnum;
     }
 
 
-    public Magnum prepareMagnum(MagnumType type){
-        int productleft = stock.getMagni();
-        if (productleft == 0){
-            System.out.println("out of magnum");
+    private Magnum prepareMagnum(MagnumType type){
+
+        if (stock.getMagni() > 0){
+            Magnum magnum = new Magnum(type);
+            stock.setMagni(stock.getMagni() - 1);
+         return magnum;
         }
-        stock.setMagni(productleft-1);
-     return new Magnum();
+        System.out.println("NO MORE ICECREAM");
+        return new Magnum();
     }
 
     @Override
     public double getProfit() {
-        return 0;
+        return profit;
     }
 
 
